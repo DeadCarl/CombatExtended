@@ -782,6 +782,11 @@ namespace CombatExtended
                 return new Vector2(1, 1);
             }
 
+	    if (Compatibility.Vehicles.GetCollisionBodyFactors(pawn, out Vector2 vehicleCollision))
+	    {
+		return vehicleCollision;
+	    }
+
             var factors = BoundsInjector.ForPawn(pawn);
 
             if (pawn.GetPosture() != PawnPosture.Standing)
