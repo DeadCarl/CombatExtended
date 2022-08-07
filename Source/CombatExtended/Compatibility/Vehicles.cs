@@ -43,6 +43,7 @@ namespace CombatExtended.Compatibility
 						float shotHeight,
 						float shotSpeed)
 	{
+	    projectileDef = projectileDef.GetProjectile();
 	    ProjectileCE projectile = (ProjectileCE)ThingMaker.MakeThing(projectileDef, null);
 	    GenSpawn.Spawn(projectile, vehicle.Position, vehicle.Map);
 

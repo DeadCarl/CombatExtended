@@ -12,7 +12,7 @@ using System.Runtime.CompilerServices;
 
 namespace CombatExtended
 {
-    static class CE_Utility
+    public static class CE_Utility
     {
         #region Camera
 
@@ -997,6 +997,26 @@ namespace CombatExtended
                 return originalVec3;
             //Log.Warning("ToVec3Gridified " + (new Vector3(originalVec3.x / highestNormalCoord, originalVec3.y, originalVec3.z / highestNormalCoord)).ToString());
             return new Vector3(originalVec3.x / factor, originalVec3.y, originalVec3.z / factor);
+	}
+	public static ThingDef GetProjectile(this ThingDef thingDef) {
+            if (thingDef.projectile != null) {
+                return thingDef;
+            }
+            if (thingDef is AmmoDef ammoDef) {
+                ThingDef user;
+                if ((user = ammoDef.Users.FirstOrFallback(null)) != null) {
+                    CompProperties_AmmoUser props = user.GetCompProperties<CompProperties_AmmoUser>();
+                    AmmoSetDef asd = props.ammoSet;
+                    AmmoLink ammoLink;
+                    if ((ammoLink = asd.ammoTypes.FirstOrFallback(null)) != null) {
+                        return ammoLink.projectile;
+                    }
+                }
+                else {
+                    return ammoDef.detonateProjectile;
+                }
+            }
+            return thingDef;
         }
     }
 }
